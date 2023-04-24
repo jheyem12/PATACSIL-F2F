@@ -1,59 +1,69 @@
-let selectedCards = [];
-let matchedCards = [];
+const choices = ["rock", "paper", "scissors"];
 
-// Shuffle the cards
-const cards = Array.from(document.querySelectorAll('.card'));
-shuffle(cards);
-cards.forEach(card => {
-  document.getElementById('game-board').appendChild(card);
+let playerScore = 0;
+let computerScore = 0;
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const playerChoice = button.id;
+        const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+        const result = playRound(playerChoice, computerChoice);
+        updateScore(result);
+        updateMessage(result, playerChoice, computerChoice);
+    });
 });
 
-// Add click event listener to each card
-cards.forEach(card => {
-  card.addEventListener('click', () => {
-    // If the card is already matched or selected, do nothing
-    if (matchedCards.includes(card) || selectedCards.includes(card)) {
-      return;
+function playRound(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return "tie";
+    } else if (playerChoice === "rock" && computerChoice === "scissors" ||
+        playerChoice === "paper" && computerChoice === "rock" ||
+        playerChoice === "scissors" && computerChoice === "paper") {
+        return "win";
+    } else {
+        return "lose";
     }
-    
-    // Reveal the card
-    card.classList.add('selected');
-    selectedCards.push(card);
-    
-    // Check if two cards are selected
-    if (selectedCards.length === 2) {
-      const [card1, card2] = selectedCards;
-      
-      // Check if the cards match
-      if (card1.dataset.card === card2.dataset.card) {
-        card1.classList.remove('selected');
-        card1.classList.add('matched');
-        matchedCards.push(card1);
-        
-        card2.classList.remove('selected');
-        card2.classList.add('matched');
-        matchedCards.push(card2);
-        
-        // Check if the game has been won
-        if (matchedCards.length === cards.length) {
-          alert('Congratulations, you won!');
-        }
-      } else {
-        // If the cards don't match, hide them again
-        setTimeout(() => {
-          card1.classList.remove('selected');
-          card2.classList.remove('selected');
-          selectedCards = [];
-        }, 1000);
-      }
-    }
-  });
-});
-
-// Shuffle an array using the Fisher-Yates algorithm
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
 }
+
+function updateScore(result) {
+    const playerScoreText = document.querySelector("#player-score");
+    const computerScoreText = document.querySelector("#computer-score");
+
+    if (result === "win") {
+        playerScore++;
+    } else if (result === "lose") {
+        computerScore++;
+    }
+
+    playerScoreText.textContent = `Player: ${playerScore}`;
+    computerScoreText.textContent = `Computer: ${computerScore}`;
+}
+
+function updateMessage(result, playerChoice, computerChoice) {
+    const message = document.querySelector("#message");
+
+    if (result === "win") {
+        message.textContent = `${playerChoice} beats ${computerChoice}. You win!`;
+    } else if (result === "lose") {
+        message.textContent = `${computerChoice} beats ${playerChoice}. You lose!`;
+    } else {
+        message.textContent = `It's a tie! You both chose ${playerChoice}.`;
+    }
+}
+
+const resetButton = document.querySelector("#reset");
+
+resetButton.addEventListener("click", () => {
+    playerScore = 0;
+    computerScore = 0;
+
+    const playerScoreText = document.querySelector("#player-score");
+    const computerScoreText = document.querySelector("#computer-score");
+    const message = document.querySelector("#message");
+
+    playerScoreText.textContent = `Player: ${playerScore}`;
+    computerScoreText.textContent = `Computer: ${computerScore}`;
+    message.textContent = "Make your choice!";
+});

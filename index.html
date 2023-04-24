@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Memory Game</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Memory Game</h1>
-  <div id="game-board">
-    <div class="card" data-card="1"></div>
-    <div class="card" data-card="1"></div>
-    <div class="card" data-card="2"></div>
-    <div class="card" data-card="2"></div>
-    <div class="card" data-card="3"></div>
-    <div class="card" data-card="3"></div>
-    <div class="card" data-card="4"></div>
-    <div class="card" data-card="4"></div>
-    <div class="card" data-card="5"></div>
-    <div class="card" data-card="5"></div>
-    <div class="card" data-card="6"></div>
-    <div class="card" data-card="6"></div>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        <div class="game">
+            <div class="choices">
+                <button id="rock">Rock</button>
+                <button id="paper">Paper</button>
+                <button id="scissors">Scissors</button>
+            </div>
+            <div class="result">
+                <p id="message"></p>
+                <button id="reset">Play Again</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
