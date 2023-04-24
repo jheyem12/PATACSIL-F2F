@@ -9,21 +9,41 @@ h1 {
 	margin-bottom: 30px;
 }
 
-#word-container {
-	margin-bottom: 20px;
-	font-size: 24px;
+#board {
+	display: inline-block;
 }
 
-#guess-container {
-	margin-bottom: 20px;
+.row:after {
+	content: "";
+	display: block;
+	clear: both;
 }
 
-#guess-input {
-	width: 30px;
-	margin-right: 10px;
+.cell {
+	width: 50px;
+	height: 50px;
+	float: left;
+	border: 1px solid black;
+	box-sizing: border-box;
+	text-align: center;
+	line-height: 50px;
+	font-size: 36px;
+	cursor: pointer;
 }
 
-#result-container {
+.cell:hover {
+	background-color: #eee;
+}
+
+.cell.x {
+	color: red;
+}
+
+.cell.o {
+	color: blue;
+}
+
+#message {
 	font-size: 24px;
 	margin-top: 20px;
 }

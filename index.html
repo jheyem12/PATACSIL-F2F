@@ -2,19 +2,30 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Hangman Game</title>
+	<title>Tic Tac Toe</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="container">
-		<h1>Hangman Game</h1>
-		<div id="word-container"></div>
-		<div id="guess-container">
-			<p>Guess a letter:</p>
-			<input type="text" id="guess-input">
-			<button id="guess-button">Guess</button>
+		<h1>Tic Tac Toe</h1>
+		<div id="board">
+			<div class="row">
+				<div class="cell" data-row="1" data-col="1"></div>
+				<div class="cell" data-row="1" data-col="2"></div>
+				<div class="cell" data-row="1" data-col="3"></div>
+			</div>
+			<div class="row">
+				<div class="cell" data-row="2" data-col="1"></div>
+				<div class="cell" data-row="2" data-col="2"></div>
+				<div class="cell" data-row="2" data-col="3"></div>
+			</div>
+			<div class="row">
+				<div class="cell" data-row="3" data-col="1"></div>
+				<div class="cell" data-row="3" data-col="2"></div>
+				<div class="cell" data-row="3" data-col="3"></div>
+			</div>
 		</div>
-		<div id="result-container"></div>
+		<p id="message"></p>
 	</div>
 
 	<script src="hangman.js"></script>
