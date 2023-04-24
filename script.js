@@ -1,59 +1,56 @@
-const squares = document.querySelectorAll('.square');
+const cells = document.querySelectorAll('td');
 let currentPlayer = 'X';
 
-squares.forEach(square => {
-  square.addEventListener('click', handleClick);
+function handleCellClick(e) {
+	const cell = e.target;
+	if (cell.textContent !== '') return;
+	cell.textContent = currentPlayer;
+	cell.classList.add(currentPlayer);
+	if (checkWin()) {
+		alert(`Player ${currentPlayer} wins!`);
+		resetGame();
+		return;
+	}
+	if (checkDraw()) {
+		alert(`It's a draw!`);
+		resetGame();
+		return;
+	}
+	currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+}
+
+function checkWin() {
+	const winningCombos = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6]
+	];
+	return winningCombos.some(combo => {
+		return combo.every(index => {
+			return cells[index].classList.contains(currentPlayer);
+		});
+	});
+}
+
+function checkDraw() {
+	return [...cells].every(cell => {
+		return cell.textContent !== '';
+	});
+}
+
+function resetGame() {
+	[...cells].forEach(cell => {
+		cell.textContent = '';
+		cell.classList.remove('X', 'O');
+	});
+	currentPlayer = 'X';
+}
+
+cells.forEach(cell => {
+	cell.addEventListener('click', handleCellClick);
 });
-
-function handleClick(event) {
-  const square = event.target;
-  if (square.textContent !== '') {
-    return;
-  }
-  square.textContent = currentPlayer;
-  if (checkForWin()) {
-    alert(`${currentPlayer} wins!`);
-    reset();
-    return;
-  }
-  if (checkForDraw()) {
-    alert('Draw!');
-    reset();
-    return;
-  }
-  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-}
-
-function checkForWin() {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-  for (let line of lines) {
-    const [a, b, c] = line;
-    if (squares[a].textContent !== '' && squares[a].textContent === squares[b].textContent && squares[b].textContent === squares[c].textContent) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function checkForDraw() {
-  for (let square of squares) {
-    if (square.textContent === '') {
-      return false;
-    }
-  }
-  return true;
-}
-
-function reset() {
-  squares.forEach(square => square.textContent = '');
-  currentPlayer = 'X';
-}
